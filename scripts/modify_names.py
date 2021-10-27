@@ -6,7 +6,7 @@ def name_modifications(bib_directory=None) -> None:
     if bib_directory is None:
         bib_directory = pathlib.Path("../bibtex")
     else:
-        bib_directory = pathlib.PurePosixPathPath(bib_directory)
+        bib_directory = pathlib.PurePosixPath(bib_directory)
 
     find_replace = (
         (("Benkarim, O",), "Benkarim, Oualid"),
