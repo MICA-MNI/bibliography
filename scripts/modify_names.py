@@ -9,16 +9,24 @@ def name_modifications(bib_directory=None) -> None:
         bib_directory = pathlib.PurePosixPath(bib_directory)
 
     find_replace = (
+        (("Bayrak, S",), "Bayrak Seyma"),
         (("Benkarim, O",), "Benkarim, Oualid"),
         (("Bernasconi, A",), "Bernasconi, Andrea"),
         (("Bernasconi, N",), "Bernasconi, Neda"),
-        (("Bernhardt, BC", "Bernhardt, Boris C"), "Bernhardt, Boris Christian"),
+        (
+            ("Bernhardt, BC", "Bernhardt, Boris C" "Bernhardt, B"),
+            "Bernhardt, Boris Christian",
+        ),
         (("Caciagli, L",), "Caciagli, Lorenzo"),
         (("Cruces, R",), "Cruces, Raul"),
+        (("DeKraker, J",), "DeKraker, Jordan"),
+        (("Herholz, P",), "Herholz, Peer"),
         (("Lariviere, S",), "Larivi{\`e}re, Sara"),
         (("Lariviere", "Larivière", "Larivi{\`{e}}re"), "Larivi{\`e}re"),
         (("Li, Q",), "Li, Qiongling"),
         (("Lowe, A",), "Lowe, Alexander"),
+        (("Margulies, DS", "Margulies, D"), "Margulies, Daniel S"),
+        (("McKeown, B",), "McKeown, Bronte"),
         (("Paquola, C",), "Paquola, Casey"),
         (("Royer, J",), "Royer, Jessica"),
         (("Smallwood, J",), "Smallwood, Jonathan"),
@@ -38,6 +46,11 @@ def name_modifications(bib_directory=None) -> None:
         for replacement in find_replace:
             for search_string in replacement[0]:
                 text = re.sub(search_string + "(,| |})", replacement[1] + r"\1", text)
+                
+                # Also try the search string without comma
+                search_string_nocomma = search_string.replace(",", "")
+                text = re.sub(search_string_nocomma + "(,| |})", replacement[1] + r"\1", text)
+
         bib_file.write_text(text)
 
 
